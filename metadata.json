@@ -1,0 +1,8 @@
+{
+  "name": "Catálogo de Productos",
+  "description": "Catálogo de Productos M. Sanchez Y Cia",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

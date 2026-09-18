@@ -1,0 +1,78 @@
+{
+  "projectInfo": {
+    "name": "B2B Catalog",
+    "description": "B2B catalog for placing orders and managing stock",
+    "primaryDatabase": "Firestore",
+    "authenticationEnabled": true,
+    "userRoles": ["admin", "user"]
+  },
+  "collections": [
+    {
+      "name": "users",
+      "documentId": "uid",
+      "fields": [
+        { "name": "email", "type": "string", "required": true },
+        { "name": "role", "type": "string", "required": true, "defaultValue": "user", "options": ["admin", "user"] },
+        { "name": "cuit", "type": "string", "required": false },
+        { "name": "razonSocial", "type": "string", "required": false }
+      ],
+      "securityRules": {
+        "read": "isOwner() || isAdmin()",
+        "create": "isOwner()",
+        "update": "isOwner() || isAdmin()",
+        "delete": "isAdmin()"
+      },
+      "description": "User profiles with role-based access control."
+    },
+    {
+      "name": "products",
+      "documentId": "auto-generated",
+      "fields": [
+        { "name": "sku", "type": "string", "required": true },
+        { "name": "articulo", "type": "string", "required": true },
+        { "name": "modelo", "type": "string", "required": true },
+        { "name": "name", "type": "string", "required": true },
+        { "name": "marca", "type": "string", "required": false },
+        { "name": "category", "type": "string", "required": false },
+        { "name": "gender", "type": "string", "required": false },
+        { "name": "line", "type": "string", "required": false },
+        { "name": "driver", "type": "string", "required": false },
+        { "name": "pricePublic", "type": "number", "required": false },
+        { "name": "priceConfidential", "type": "number", "required": false },
+        { "name": "coverImage", "type": "string", "required": false },
+        { "name": "sizes", "type": "map", "required": true, "description": "Map of size (e.g. '40') to stock integer" }
+      ],
+      "securityRules": {
+        "read": "isAuthenticated()",
+        "create": "isAdmin()",
+        "update": "isAdmin()",
+        "delete": "isAdmin()"
+      },
+      "description": "Product catalog with stock info."
+    },
+    {
+      "name": "orders",
+      "documentId": "auto-generated",
+      "fields": [
+        { "name": "userId", "type": "string", "required": true },
+        { "name": "cuit", "type": "string", "required": false },
+        { "name": "razonSocial", "type": "string", "required": false },
+        { "name": "items", "type": "array", "required": true },
+        { "name": "createdAt", "type": "timestamp", "required": true },
+        { "name": "status", "type": "string", "required": true, "defaultValue": "pending" }
+      ],
+      "securityRules": {
+        "read": "isOwner() || isAdmin()",
+        "create": "isAuthenticated()",
+        "update": "isAdmin()",
+        "delete": "isAdmin()"
+      },
+      "description": "Orders placed by users."
+    }
+  ],
+  "customRules": [
+    "function isAdmin() { return isAuthenticated() && exists(/databases/$(database)/documents/users/$(request.auth.uid)) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'; }",
+    "function isOwner() { return isAuthenticated() && resource.data.userId == request.auth.uid; }",
+    "function isOwnerOfUserDoc() { return isAuthenticated() && request.auth.uid == document; }"
+  ]
+}

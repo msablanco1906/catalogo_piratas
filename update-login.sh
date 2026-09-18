@@ -1,0 +1,5 @@
+sed -i 's/signInWithEmailAndPassword/signInWithEmailAndPassword, createUserWithEmailAndPassword/g' src/components/LoginView.tsx
+sed -i 's/const \[loading, setLoading\] = useState(false);/const [loading, setLoading] = useState(false);\n  const [isRegistering, setIsRegistering] = useState(false);/g' src/components/LoginView.tsx
+sed -i 's/await signInWithEmailAndPassword(auth, email, password);/if (isRegistering) {\n        const cred = await createUserWithEmailAndPassword(auth, email, password);\n        await setDoc(doc(db, "users", cred.user.uid), { email, role: "admin" });\n      } else {\n        await signInWithEmailAndPassword(auth, email, password);\n      }/g' src/components/LoginView.tsx
+sed -i 's/{loading ? .\+}/{loading ? "Procesando..." : isRegistering ? "Registrarme como Admin" : "Ingresar"}/g' src/components/LoginView.tsx
+sed -i 's/<\/form>/  <button type="button" onClick={() => setIsRegistering(!isRegistering)} className="w-full text-sm text-indigo-600 hover:text-indigo-800 mt-4">{isRegistering ? "¿Ya tienes cuenta? Inicia sesión" : "¿Primer ingreso? Crea tu cuenta administradora"}<\/button>\n        <\/form>/g' src/components/LoginView.tsx

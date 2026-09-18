@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+  const url = 'https://docs.google.com/spreadsheets/d/1nQUwfBV8eJhBelRu0XMYEXDqz-lfP8g06cc2sMldVq0/gviz/tq?tqx=out:csv&tq=select%20*%20where%201%3D1&sheet=Pedidos';
+  fetch(url).then(r => r.text()).then(console.log).catch(console.error);
+</script>
+</body>
+</html>
