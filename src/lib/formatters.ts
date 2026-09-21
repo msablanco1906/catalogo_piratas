@@ -15,19 +15,18 @@ export function formatProductName(name: string | undefined, colorDesc: string | 
 
 export function formatConfidentialPrice(price: number | undefined | null): string {
   if (price === undefined || price === null || isNaN(price)) return '0,00';
-  return Math.round(price).toLocaleString('es-AR', { maximumFractionDigits: 0 });
+  return price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 export function formatPublicPrice(price: number | undefined | null): string {
   if (price === undefined || price === null || isNaN(price)) return '0,00';
-  return Math.round(price).toLocaleString('es-AR', { maximumFractionDigits: 0 });
+  return price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 export function formatPrice(price: number | undefined | null): string {
   if (price === undefined || price === null || isNaN(price)) return '0,00';
-  return Math.round(price).toLocaleString('es-AR', { maximumFractionDigits: 0 });
+  return price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
 export function parseSheetPrice(val: string | number | undefined | null): number | undefined {
   if (val === undefined || val === null) return undefined;
   if (typeof val === 'number') return isNaN(val) ? undefined : val;
