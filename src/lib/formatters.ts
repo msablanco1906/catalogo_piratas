@@ -14,17 +14,17 @@ export function formatProductName(name: string | undefined, colorDesc: string | 
 }
 
 export function formatConfidentialPrice(price: number | undefined | null): string {
-  if (price === undefined || price === null || isNaN(price)) return '0';
+  if (price === undefined || price === null || isNaN(price)) return '0,00';
   return Math.round(price).toLocaleString('es-AR', { maximumFractionDigits: 0 });
 }
 
 export function formatPublicPrice(price: number | undefined | null): string {
-  if (price === undefined || price === null || isNaN(price)) return '0';
+  if (price === undefined || price === null || isNaN(price)) return '0,00';
   return Math.round(price).toLocaleString('es-AR', { maximumFractionDigits: 0 });
 }
 
 export function formatPrice(price: number | undefined | null): string {
-  if (price === undefined || price === null || isNaN(price)) return '0';
+  if (price === undefined || price === null || isNaN(price)) return '0,00';
   return Math.round(price).toLocaleString('es-AR', { maximumFractionDigits: 0 });
 }
 
